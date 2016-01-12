@@ -1,6 +1,17 @@
 <?php
 	session_start();
-	include('../pdo.php');
+
+
+
+    try
+    {
+        $db = new PDO('mysql:host=localhost;dbname=lamp_1;charset=utf8', 'root', 'root');
+    }
+    catch (Exception $e)
+    {
+        die('Erreur : ' . $e->getMessage());
+    }
+
 	$query = $db->query('SELECT * FROM exo040116');
 	while($datas = $query->fetch())
 	{

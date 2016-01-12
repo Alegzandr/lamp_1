@@ -7,7 +7,14 @@
         exit;
     }
 
-    include('../pdo.php');
+    try
+    {
+        $db = new PDO('mysql:host=localhost;dbname=lamp_1;charset=utf8', 'root', 'root');
+    }
+    catch (Exception $e)
+    {
+        die('Erreur : ' . $e->getMessage());
+    }
 	$log = $_SESSION['login'];
     $query = $db->prepare('SELECT best_score FROM exo040116 WHERE login = :username');
 	$query->bindParam(':username', $log , PDO::PARAM_STR);
