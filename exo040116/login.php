@@ -5,10 +5,11 @@
     global $config;
     $pdo = new PDO($config['host'], $config['user'], $config['password']);
     $stmt = $pdo->prepare('SELECT * FROM exo040116 WHERE login = :login');
+    $_POST['login'] = strtolower($_POST['login']);
     $stmt->bindParam('login', $_POST['login']);
     $stmt->execute();
     $result = $stmt->fetch();
-    if(!isset($_POST['login']))
+    if(empty($_POST['login']))
     {
         $errorMessage = null;
     }
