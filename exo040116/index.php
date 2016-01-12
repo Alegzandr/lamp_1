@@ -57,7 +57,7 @@
             {
                 $_SESSION['hiscore'] = $_SESSION['tries'];
                 $his = $_SESSION['hiscore'];
-                $query = $db->prepare('UPDATE lamp040116 SET best_score = ":score" WHERE login = ":username"');
+                $query = $db->prepare('UPDATE exo040116 SET best_score = ":score" WHERE login = ":username"');
                 $query->bindParam(':score', $his , PDO::PARAM_STR);
                 $query->bindParam(':username', $log , PDO::PARAM_STR);
                 $query->execute();
