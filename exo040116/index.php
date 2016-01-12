@@ -19,6 +19,11 @@
     $query->closeCursor();
     $_SESSION['hiscore'] = $his;
 
+    if(isset($_POST['reset'])){
+        unset($_SESSION['choice']);
+        unset($_SESSION['tries']);
+    }
+
     if(isset($_SESSION['choice']))
     {
         echo('<h2>Tentative n°'.$_SESSION['tries'].'</h2>');
@@ -89,7 +94,8 @@
 <body>
     <form name="game" method="POST">
         <input type="text" name="guess" autofocus><br><br>
-        <input type="submit">
+        <input type="submit" value="Envoyer">
+        <input type="submit" value="Reset" name="reset">
     </form>
 
     <?php
