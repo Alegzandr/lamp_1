@@ -7,34 +7,25 @@
         exit;
     }
 
-    try
-    {
-        $db = new PDO('mysql:host=localhost;dbname=lamp_1;charset=utf8', 'root', 'root');
-    }
-    catch (Exception $e)
-    {
-        die('Erreur : ' . $e->getMessage());
-    }
-	$log = $_SESSION['login'];
-    $query = $db->prepare('SELECT best_score FROM exo040116 WHERE login = :username');
-	$query->bindParam(':username', $log , PDO::PARAM_STR);
-	$query->execute();
-    while($datas = $query->fetch())
-    {
-        $his = $datas['best_score'];
-    }
-    $query->closeCursor();
-    $_SESSION['hiscore'] = $his;
-
-    if(isset($_POST['logout'])){
-        unset($_SESSION['login']);
-        header('Location: login.php');
-        exit;
-    }
+    include('../config/dbconf.php');
+    global $config;
+    $pdo = new PDO($config['host'], $config['user'], $config['password']);
+    $stmt = $pdo->prepare('SELECT best_score FROM exo040116 WHERE login = :login');
+    $stmt->bindParam('login', $_SESSION['login']);
+    $stmt->execute();
+    $result = $stmt->fetch();
+    $_SESSION['hiscore'] = $result['best_score'];
 
     if(isset($_POST['reset'])){
         unset($_SESSION['choice']);
         unset($_SESSION['tries']);
+    }
+
+    if(isset($_POST['logout'])){
+        unset($_SESSION['login']);
+        $_SESSION['logged'] = false;
+        header('Location: login.php');
+        exit;
     }
 
     if(isset($_SESSION['choice']))
@@ -74,12 +65,10 @@
             if($_SESSION['hiscore'] === 0 || $_SESSION['tries'] < $_SESSION['hiscore'])
             {
                 $_SESSION['hiscore'] = $_SESSION['tries'];
-                $his = $_SESSION['hiscore'];
-                $query = $db->prepare('UPDATE exo040116 SET best_score = ":score" WHERE login = ":username"');
-                $query->bindParam(':score', $his , PDO::PARAM_STR);
-                $query->bindParam(':username', $log , PDO::PARAM_STR);
-                $query->execute();
-                $query->closeCursor();
+                $stmt = $pdo->prepare('UPDATE exo040116 SET best_score = :score WHERE login = :login');
+                $stmt->bindParam('login', $_SESSION['login']);
+                $stmt->bindParam('score', $_SESSION['hiscore']);
+                $stmt->execute();
             }
             unset($_SESSION['tries']);
         }
