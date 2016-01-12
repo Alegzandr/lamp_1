@@ -1,14 +1,6 @@
 <?php
 	session_start();
-	try
-	{
-	    $db = new PDO('mysql:host=localhost;dbname=exos_lamp;charset=utf8', 'root', 'root');
-	}
-	catch (Exception $e)
-	{
-	        die('Erreur : ' . $e->getMessage());
-	}
-
+	include('../pdo.php');
 	$query = $db->query('SELECT * FROM lamp040116');
 	while($datas = $query->fetch())
 	{

@@ -7,14 +7,7 @@
         exit;
     }
 
-    try
-    {
-        $db = new PDO('mysql:host=localhost;dbname=exos_lamp;charset=utf8', 'root', 'root');
-    }
-    catch (Exception $e)
-    {
-            die('Erreur : ' . $e->getMessage());
-    }
+    include('../pdo.php');
 	$log = $_SESSION['login'];
     $query = $db->prepare('SELECT best_score FROM lamp040116 WHERE login = :username');
 	$query->bindParam(':username', $log , PDO::PARAM_STR);
