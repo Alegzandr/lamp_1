@@ -9,7 +9,7 @@
 
     include('../pdo.php');
 	$log = $_SESSION['login'];
-    $query = $db->prepare('SELECT best_score FROM lamp040116 WHERE login = :username');
+    $query = $db->prepare('SELECT best_score FROM 040116 WHERE login = :username');
 	$query->bindParam(':username', $log , PDO::PARAM_STR);
 	$query->execute();
     while($datas = $query->fetch())
