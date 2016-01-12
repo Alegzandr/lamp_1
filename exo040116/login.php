@@ -36,16 +36,11 @@
             text-align: center;
         }
     </style>
-    <script>
-        window.onload = function(){
-            document.forms['login'].elements['login'].focus();
-        };
-    </script>
 </head>
 <body>
 	<h2>Accéder au jeu</h2>
     <form name="login" method="POST">
-    	<input type="text" name="login" placeholder="Nom d'utilisateur"><br><br>
+    	<input type="text" name="login" placeholder="Nom d'utilisateur" autofocus><br><br>
         <input type="password" name="password" placeholder="Mot de passe"><br><br>
         <input type="submit" value="S'identifier">
     </form>

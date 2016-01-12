@@ -85,15 +85,10 @@
             text-align: center;
         }
     </style>
-    <script>
-        window.onload = function(){
-            document.forms['game'].elements['guess'].focus();
-        };
-    </script>
 </head>
 <body>
     <form name="game" method="POST">
-        <input type="text" name="guess"><br><br>
+        <input type="text" name="guess" autofocus><br><br>
         <input type="submit">
     </form>
 
