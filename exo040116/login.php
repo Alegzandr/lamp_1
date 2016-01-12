@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	include('../pdo.php');
-	$query = $db->query('SELECT * FROM 040116');
+	$query = $db->query('SELECT * FROM exo040116');
 	while($datas = $query->fetch())
 	{
 		$_SESSION['login'] = $datas['login'];
