@@ -19,6 +19,12 @@
     $query->closeCursor();
     $_SESSION['hiscore'] = $his;
 
+    if(isset($_POST['logout'])){
+        unset($_SESSION['login']);
+        header('Location: login.php');
+        exit;
+    }
+
     if(isset($_POST['reset'])){
         unset($_SESSION['choice']);
         unset($_SESSION['tries']);
@@ -105,5 +111,10 @@
 	        echo('<br>Meilleur score : '.$_SESSION['hiscore']);
 	    }
     ?>
+
+    <br><br>
+    <form name="logged" method="POST">
+        <input type="submit" value="Se déconnecter" name="logout">
+    </form>
 </body>
 </html>
