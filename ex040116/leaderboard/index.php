@@ -32,5 +32,12 @@ for ($i = 0; $i < 3; $i++) {
 }
 echo('</table>');
 ?>
+
+<br>
+<form name="navigate">
+    <input type="button" value="Précédent" name="previous">
+</form>
+
+<script src="../js/script.js"></script>
 </body>
 </html>
