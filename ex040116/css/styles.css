@@ -1,0 +1,25 @@
+body {
+    margin-top: 150px;
+    background-color: #000;
+    color: #fff;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    text-align: center;
+}
+
+input {
+    text-align: center;
+}
+
+.errors {
+    color: crimson;
+}
+
+table {
+    margin: auto;
+}
+
+tr, td {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #fff;
+}

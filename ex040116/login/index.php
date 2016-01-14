@@ -5,7 +5,7 @@ if (empty($_POST['login'])) {
     $errorMessage = null;
 } else {
     $_POST['login'] = str_replace('\' ', '\'', ucwords(str_replace('\'', '\' ', strtolower($_POST['login']))));
-    include('../config/dbconf.php');
+    include('../../config/dbconf.php');
     global $config;
     $pdo = new PDO($config['host'], $config['user'], $config['password']);
     $stmt = $pdo->prepare('SELECT * FROM ex040116 WHERE login = :login');
@@ -20,7 +20,7 @@ if (empty($_POST['login'])) {
     } else {
         $_SESSION['login'] = $_POST['login'];
         $_SESSION['logged'] = true;
-        header('Location: index.php');
+        header('Location: ../');
         exit;
     }
 }
@@ -31,23 +31,7 @@ if (empty($_POST['login'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=yes">
     <title>Des papiers dans un bol - Login</title>
-    <style>
-        body {
-            margin-top: 150px;
-            background-color: #000;
-            color: #fff;
-            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-            text-align: center;
-        }
-
-        input {
-            text-align: center;
-        }
-
-        p {
-            color: crimson;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/styles.css" type="text/css">
 </head>
 <body>
 <h2>Accéder au jeu</h2>
@@ -56,7 +40,7 @@ if (empty($_POST['login'])) {
     <input type="password" name="password" placeholder="Mot de passe"><br><br>
     <input type="submit" value="S'identifier">
 </form>
-<p class="errors">
+<p>
     <?php
     echo($errorMessage);
     ?>

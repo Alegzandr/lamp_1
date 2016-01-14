@@ -2,7 +2,7 @@
 session_start();
 
 if (!$_SESSION['logged']) {
-    header('Location: login.php');
+    header('Location: ./login');
     exit;
 }
 
@@ -23,7 +23,7 @@ if (isset($_POST['reset'])) {
 if (isset($_POST['logout'])) {
     unset($_SESSION['login']);
     $_SESSION['logged'] = false;
-    header('Location: login.php');
+    header('Location: ./login');
     exit;
 }
 
@@ -68,21 +68,14 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=yes">
     <title>Des papiers dans un bol</title>
-    <style>
-        body {
-            margin-top: 150px;
-            background-color: #000;
-            color: #fff;
-            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-            text-align: center;
-        }
-
-        input {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/styles.css" type="text/css">
 </head>
 <body>
+<form name="logged" method="POST">
+    <input type="button" value="Leaderboard" name="lb">
+    <input type="submit" value="Se déconnecter" name="logout">
+</form>
+
 <form name="game" method="POST">
     <input type="text" name="guess" autofocus><br><br>
     <input type="submit" value="Envoyer">
@@ -92,13 +85,11 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
 <?php
 echo $response;
 if ($_SESSION['hiscore'] != 0) {
-    echo('<br>Meilleur score : ' . $_SESSION['hiscore']);
+    echo('<p>Meilleur score : ' . $_SESSION['hiscore'] . '</p>');
 }
 ?>
 
-<br><br>
-<form name="logged" method="POST">
-    <input type="submit" value="Se déconnecter" name="logout">
-</form>
+<script src="./js/script.js"></script>
+
 </body>
 </html>
