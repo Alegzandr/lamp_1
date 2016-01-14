@@ -9,7 +9,7 @@ if (!$_SESSION['logged']) {
 include('../config/dbconf.php');
 global $config;
 $pdo = new PDO($config['host'], $config['user'], $config['password']);
-$stmt = $pdo->prepare('SELECT best_score FROM exo040116 WHERE login = :login');
+$stmt = $pdo->prepare('SELECT best_score FROM ex040116 WHERE login = :login');
 $stmt->bindParam('login', $_SESSION['login']);
 $stmt->execute();
 $result = $stmt->fetch();
@@ -53,7 +53,7 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
 
         if ($_SESSION['hiscore'] === 0 || $_SESSION['tries'] < $_SESSION['hiscore']) {
             $_SESSION['hiscore'] = $_SESSION['tries'];
-            $stmt = $pdo->prepare('UPDATE exo040116 SET best_score = :score WHERE login = :login');
+            $stmt = $pdo->prepare('UPDATE ex040116 SET best_score = :score WHERE login = :login');
             $stmt->bindParam('login', $_SESSION['login']);
             $stmt->bindParam('score', $_SESSION['hiscore']);
             $stmt->execute();

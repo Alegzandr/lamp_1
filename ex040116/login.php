@@ -8,7 +8,7 @@ if (empty($_POST['login'])) {
     include('../config/dbconf.php');
     global $config;
     $pdo = new PDO($config['host'], $config['user'], $config['password']);
-    $stmt = $pdo->prepare('SELECT * FROM exo040116 WHERE login = :login');
+    $stmt = $pdo->prepare('SELECT * FROM ex040116 WHERE login = :login');
     $stmt->bindParam('login', $_POST['login']);
     $stmt->execute();
     $result = $stmt->fetch();
