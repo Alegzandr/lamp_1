@@ -15,7 +15,7 @@ if (empty($_POST['login'])) {
 
     if ($result === false) {
         $errorMessage = 'Nom d\'utilisateur introuvable';
-    } elseif ($_POST['password'] != $result['password']) {
+    } elseif (sha1($_POST['password']) != $result['password']) {
         $errorMessage = 'Mot de passe incorrect';
     } else {
         $_SESSION['login'] = $_POST['login'];
