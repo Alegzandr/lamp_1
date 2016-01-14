@@ -15,7 +15,7 @@ $topScores = array();
 include('../../config/dbconf.php');
 global $config;
 $pdo = new PDO($config['host'], $config['user'], $config['password']);
-$stmt = $pdo->prepare('SELECT login, best_score FROM ex040116 ORDER BY best_score ASC LIMIT 3');
+$stmt = $pdo->prepare('SELECT login, best_score FROM ex040116 WHERE best_score IS NOT NULL ORDER BY best_score ASC LIMIT 3');
 $stmt->bindParam('login', $_SESSION['login']);
 $stmt->execute();
 while ($result = $stmt->fetch()) {
@@ -26,7 +26,9 @@ $stmt->closeCursor();
 
 echo('<br><table><tr><td>Numéro</td><td>Joueur</td><td>Meilleur score</td></tr>');
 for ($i = 0; $i < 3; $i++) {
-    echo('<tr><td>' . ($i + 1) . '</td><td>' . $topPlayers[$i] . '</td><td>' . $topScores[$i] . '</td></tr>');
+    if (isset($topScores[$i])) {
+        echo('<tr><td>' . ($i + 1) . '</td><td>' . $topPlayers[$i] . '</td><td>' . $topScores[$i] . '</td></tr>');
+    }
 }
 echo('</table>');
 ?>
