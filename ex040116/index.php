@@ -27,6 +27,17 @@ if (isset($_POST['reset-bs'])) {
 }
 
 if (isset($_POST['logout'])) {
+    $stmt = $pdo->prepare('UPDATE ex040116
+                          SET last_choice = :choice,
+                          last_guess = :guess,
+                          last_tries = :tries
+                          WHERE login = :login');
+    $stmt->bindParam('choice', $_SESSION['choice']);
+    $stmt->bindParam('guess', $_SESSION['guess']);
+    $stmt->bindParam('tries', $_SESSION['tries']);
+    $stmt->bindParam('login', $_SESSION['login']);
+    $stmt->execute();
+
     unset($_SESSION['login']);
     $_SESSION['logged'] = false;
     header('Location: ./login');
