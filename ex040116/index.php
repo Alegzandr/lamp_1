@@ -13,11 +13,17 @@ $stmt = $pdo->prepare('SELECT best_score FROM ex040116 WHERE login = :login');
 $stmt->bindParam('login', $_SESSION['login']);
 $stmt->execute();
 $result = $stmt->fetch();
-$_SESSION['hiscore'] = $result['best_score'];
+$_SESSION['best_score'] = $result['best_score'];
 
 if (isset($_POST['reset'])) {
     unset($_SESSION['choice']);
     unset($_SESSION['tries']);
+}
+
+if (isset($_POST['reset-bs'])) {
+    $stmt = $pdo->prepare('UPDATE ex040116 SET best_score = NULL WHERE login = :login');
+    $stmt->bindParam('login', $_SESSION['login']);
+    $stmt->execute();
 }
 
 if (isset($_POST['logout'])) {
@@ -42,20 +48,20 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
     $guess = $_POST['guess'];
 
     if ($guess > $_SESSION['choice']) {
-        $response = "C'est moins";
+        $response = "C'est moins !";
         $_SESSION['tries']++;
     } else if ($guess < $_SESSION['choice']) {
-        $response = "C'est plus";
+        $response = "C'est plus !";
         $_SESSION['tries']++;
     } else {
-        $response = "C'est gagné";
+        $response = "C'est gagné !";
         unset($_SESSION['choice']);
 
-        if ($_SESSION['hiscore'] === 0 || $_SESSION['tries'] < $_SESSION['hiscore']) {
-            $_SESSION['hiscore'] = $_SESSION['tries'];
+        if (!isset($_SESSION['best_score']) || ($_SESSION['tries'] < $_SESSION['best_score'])) {
+            $_SESSION['best_score'] = $_SESSION['tries'];
             $stmt = $pdo->prepare('UPDATE ex040116 SET best_score = :score WHERE login = :login');
             $stmt->bindParam('login', $_SESSION['login']);
-            $stmt->bindParam('score', $_SESSION['hiscore']);
+            $stmt->bindParam('score', $_SESSION['best_score']);
             $stmt->execute();
         }
         unset($_SESSION['tries']);
@@ -79,13 +85,16 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
 <form name="game" method="POST">
     <input type="text" name="guess" autofocus><br><br>
     <input type="submit" value="Envoyer">
-    <input type="submit" value="Reset" name="reset">
+    <input type="submit" value="Reset game" name="reset">
+    <input type="submit" value="Reset best score" name="reset-bs">
 </form>
 
 <?php
-echo $response;
-if ($_SESSION['hiscore'] != 0) {
-    echo('<p>Meilleur score : ' . $_SESSION['hiscore'] . '</p>');
+echo('<p>' . $response . '</p>');
+if (isset($_SESSION['best_score'])) {
+    echo '<p>Meilleur score : ' . $_SESSION['best_score'] . '</p>';
+} else {
+    echo '<p>Pas de meilleur score.</p>';
 }
 ?>
 
