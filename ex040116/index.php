@@ -4,6 +4,7 @@ if (!$_SESSION['logged']) {
     header('Location: ./login');
     exit;
 }
+
 include('../config/dbconf.php');
 global $config;
 $pdo = new PDO($config['host'], $config['user'], $config['password']);
@@ -12,6 +13,7 @@ $stmt->bindParam('login', $_SESSION['login']);
 $stmt->execute();
 $result = $stmt->fetch();
 $_SESSION['best_score'] = $result['best_score'];
+
 if (isset($_POST['reset'])) {
     unset($_SESSION['choice']);
     unset($_SESSION['tries']);
@@ -37,6 +39,7 @@ if (isset($_POST['logout'])) {
     header('Location: ./login');
     exit;
 }
+
 if (isset($_SESSION['choice'])) {
     echo('<h2>Tentative n°' . $_SESSION['tries'] . '</h2>');
 } else {
@@ -103,11 +106,9 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
 
 <?php
 echo '<p>' . $response . '</p>';
-
 if (isset($_SESSION['choice'])) {
     echo '<p>Indice : ' . $_SESSION['choice'] . '</p>';
 }
-
 if (isset($_SESSION['best_score'])) {
     echo '<p>Meilleur score : ' . $_SESSION['best_score'] . '</p>';
 } else {
