@@ -5,7 +5,7 @@ if (!$_SESSION['logged']) {
     exit;
 }
 
-include('../config/dbconf.php');
+require_once('../config/dbconf.php');
 global $config;
 $pdo = new PDO($config['host'], $config['user'], $config['password']);
 $stmt = $pdo->prepare('SELECT best_score FROM ex040116 WHERE login = :login');

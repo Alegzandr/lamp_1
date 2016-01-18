@@ -5,7 +5,7 @@ if (empty($_POST['login'])) {
     $errorMessage = null;
 } else {
     $_POST['login'] = str_replace('\' ', '\'', ucwords(str_replace('\'', '\' ', strtolower($_POST['login']))));
-    include('../config/dbconf.php');
+    require_once('../config/dbconf.php');
     global $config;
     $pdo = new PDO($config['host'], $config['user'], $config['password']);
     $stmt = $pdo->prepare('SELECT * FROM ex040116 WHERE login = :login');
