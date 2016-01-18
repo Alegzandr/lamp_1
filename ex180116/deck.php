@@ -23,7 +23,7 @@ class Cards
     public function getValue()
     {
         if (is_int($this->face)) {
-            return this->face;
+            return $this->face;
         } else {
             return 10;
         }
@@ -34,3 +34,38 @@ class Cards
         return $this->face . ' de ' . $this->color;
     }
 }
+
+class Deck
+{
+    private $cards;
+
+    public function __construct()
+    {
+        $this->cards = [];
+        $faces = range(1, 10);
+        $faces = array_merge($faces, ['Jack', 'Queen', 'King']);
+        $colors = ['Heart', 'Club', 'Diamond', 'Spade'];
+
+        foreach ($colors as $color) {
+            foreach ($faces as $face) {
+                $this->cards[] = new Cards($color, $face);
+            }
+        }
+    }
+
+    public function shuffle()
+    {
+        shuffle($this->cards);
+        return this;
+    }
+
+    public function deal($n = 1)
+    {
+        return;
+    }
+}
+
+$d = new Deck();
+list($card) = $d->shuffle()->deal(1);
+
+echo $card;
