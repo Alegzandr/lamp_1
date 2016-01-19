@@ -8,7 +8,7 @@ if (!$_SESSION['logged']) {
 require_once('./config/dbconf.php');
 global $config;
 $pdo = new PDO($config['host'], $config['user'], $config['password']);
-$stmt = $pdo->prepare('SELECT best_score FROM ex040116 WHERE login = :login');
+$stmt = $pdo->prepare('SELECT best_score FROM lamp_1 WHERE login = :login');
 $stmt->bindParam('login', $_SESSION['login']);
 $stmt->execute();
 $result = $stmt->fetch();
@@ -19,12 +19,12 @@ if (isset($_POST['reset'])) {
     unset($_SESSION['tries']);
 }
 if (isset($_POST['reset-bs'])) {
-    $stmt = $pdo->prepare('UPDATE ex040116 SET best_score = NULL WHERE login = :login');
+    $stmt = $pdo->prepare('UPDATE lamp_1 SET best_score = NULL WHERE login = :login');
     $stmt->bindParam('login', $_SESSION['login']);
     $stmt->execute();
 }
 if (isset($_POST['logout'])) {
-    $stmt = $pdo->prepare('UPDATE ex040116
+    $stmt = $pdo->prepare('UPDATE lamp_1
                           SET last_choice = :choice,
                           last_tries = :tries
                           WHERE login = :login');
@@ -52,7 +52,7 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
     $response = "Pas de nombre";
 } else {
     $guess = $_POST['guess'];
-    $stmt = $pdo->prepare('UPDATE ex040116 SET last_guess = :guess WHERE login = :login');
+    $stmt = $pdo->prepare('UPDATE lamp_1 SET last_guess = :guess WHERE login = :login');
     $stmt->bindParam('guess', $guess);
     $stmt->bindParam('login', $_SESSION['login']);
     $stmt->execute();
@@ -67,12 +67,12 @@ if (empty($_POST['guess']) || !isset($_POST['guess'])) {
         unset($_SESSION['choice']);
         if (!isset($_SESSION['best_score']) || ($_SESSION['tries'] < $_SESSION['best_score'])) {
             $_SESSION['best_score'] = $_SESSION['tries'];
-            $stmt = $pdo->prepare('UPDATE ex040116 SET best_score = :score WHERE login = :login');
+            $stmt = $pdo->prepare('UPDATE lamp_1 SET best_score = :score WHERE login = :login');
             $stmt->bindParam('score', $_SESSION['best_score']);
             $stmt->bindParam('login', $_SESSION['login']);
             $stmt->execute();
         }
-        $stmt = $pdo->prepare('UPDATE ex040116
+        $stmt = $pdo->prepare('UPDATE lamp_1
                               SET last_choice = NULL,
                               last_guess = NULL,
                               last_tries = NULL

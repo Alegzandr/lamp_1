@@ -15,7 +15,7 @@ $topScores = array();
 include('../config/dbconf.php');
 global $config;
 $pdo = new PDO($config['host'], $config['user'], $config['password']);
-$stmt = $pdo->prepare('SELECT login, best_score FROM ex040116 WHERE best_score IS NOT NULL ORDER BY best_score ASC LIMIT 10');
+$stmt = $pdo->prepare('SELECT login, best_score FROM lamp_1 WHERE best_score IS NOT NULL ORDER BY best_score ASC LIMIT 10');
 $stmt->bindParam('login', $_SESSION['login']);
 $stmt->execute();
 while ($result = $stmt->fetch()) {
