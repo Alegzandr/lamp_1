@@ -12,7 +12,7 @@
 $topPlayers = array();
 $topScores = array();
 
-include('../../config/dbconf.php');
+include('../config/dbconf.php');
 global $config;
 $pdo = new PDO($config['host'], $config['user'], $config['password']);
 $stmt = $pdo->prepare('SELECT login, best_score FROM ex040116 WHERE best_score IS NOT NULL ORDER BY best_score ASC LIMIT 10');
